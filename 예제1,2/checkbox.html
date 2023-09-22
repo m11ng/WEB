@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+
+    </style>
+</head>
+<body>
+    <!-- 1. 일단 태그로 틀을 만들어 놓자 -->
+    <!-- 2. 이벤트를 걸기 -->
+    <!-- 3. 전체 이벤트 & 전체선택과 해제가 있어야 함.-->
+    <!-- 4. 선택 이벤트 -->
+    <form action="">
+        <label for="checkAll"><input type="checkbox" name="checkAll" id="checkAll" onclick="sportsAll()">전체</label>
+        
+        <label><input type="checkbox" name="sports" value="농구" onclick="chk()">농구</label>
+        <label><input type="checkbox" name="sports" value="배구" onclick="chk()">배구</label>
+        <label><input type="checkbox" name="sports" value="야구" onclick="chk()">야구</label>
+        <label><input type="checkbox" name="sports" value="축구" onclick="chk()">축구</label>
+    </form>
+
+    <textarea name="textarea" cols="30" rows="10"></textarea>
+
+    <script>
+
+        // textarea value 1개씩 넣기.
+        function chk() {
+            var chk = document.getElementsByName("sports"); 
+            var textbox = []; // 막 만든거를. 정리해야하는 통을 하나 만든거 . 이걸 보여주는거
+            for(var i=0; i<chk.length; i++){
+                if(chk[i].checked){
+                    textbox.push(chk[i].value);
+                }
+            }
+            document.querySelector("textarea").innerHTML = textbox;
+        }
+
+        // 되면..... 전체체크 해제하는 거 까지 해보기. 
+
+        // 전체 클릭시 textarea 다 들어가게 넣기.
+        function sportsAll() {
+            var chk = document.getElementsByName("sports"); // 요소 가져오기
+            var chkAll = document.getElementsByName("checkAll");
+
+            var textbox = []; // textarea 들어갈 값.
+            if(chkAll[0].checked){ //true . 전체체크가 체크되어있으면
+                for(var i=0; i<chk.length; i++){
+                    document.getElementsByName("sports")[i].checked = true; // 트루값을 넣어줘. 체크값을. 스포츠 칭구들한테. 화면만 바꿔준 코드
+                    textbox.push(chk[i].value);
+                }
+                document.querySelector("textarea").innerHTML = textbox;
+            }
+            else {
+                for(var i=0; i<chk.length; i++){
+                    document.getElementsByName("sports")[i].checked = false; // 화면만 바꿔준 코드
+                    textbox.pop(chk[i].value);
+                }
+                document.querySelector("textarea").innerHTML = textbox; // 비어있는걸 보여줘.
+            }
+
+
+        }
+
+        // 도큐먼트 요소들 가져오기
+        // <select multiple="">
+
+
+
+    </script>
+</body>
+</html>

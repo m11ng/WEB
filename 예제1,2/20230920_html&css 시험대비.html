@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        /* 
+        전체 선택자 : *
+        * : 모든 태그(전체 태그)에 적용된다.
+        html태그를 포함해 head태그, title태그, style태그까지 적용된다.
+        */
+        * {color: blue;}
+
+        /* 
+        태그 선택자 : p
+        특정한 태그를 선택한다.
+        */
+        h1{color: skyblue;}
+        p{color: gray;}
+    
+        /* 
+        아이디 선택자 : #p
+        id 속성은 웹 페이지 내부에서 중복되면 안된다 라는 규정이 있음
+        아이디 선택자는 특정한 하나의 태그를 선택할 때 사용한다.
+        */
+        #header{
+            width: 800px; margin: 0 auto; background: red;
+        }
+        #wrap{
+            width: 800px; margin: 0 auto; overflow: hidden;
+        }
+        #aside{
+            width: 200; float: left; background: blue;
+        }
+        #content{
+            width: 600px; float: left; background: green;
+        }
+        /* 
+        클래스 선택자 : .클래스
+        특정한 클래스를 가지고 있는 태그를 선택합니다.
+        */
+        .select{ color: red; }
+
+        /* .클래스는 공백으로 구분해서 여러 클래스를 사용할 수 있다 */
+        .item{color:red;}
+        .header{background-color: blue;}
+
+        /* 
+        클래스 속성은 중복될 수 있다
+        태그선택자와 클래스선택자를 함께 사용해 더 정확한 선택이 가능하다.
+        */
+        li.select{color: orange;}
+
+        /* 속성 선택자 : 위 선택자와 함께 사용하는 선택자 */
+        input[type=text] {background: yellow;}
+        input[type=password] {background: green;}
+
+        /* 후손 선택자 : 특정한 태그 아래의 있는 후손을 선택할 때 사용하는 선택자입니다. */
+        #header h1 { color: purple;}
+        #section h1 {color: white;}
+
+
+        #p1{ background-color: rgba(255, 0, 0, 0.3);}
+        #p2{background-color: hsl(120, 100%, 75%);}
+    </style>
+</head>
+
+<body>
+    <h1>html & css</h1>
+    <p>9월 20일 html&css 시험 20문제 10시</p>
+    <p>9월 20일 html&css 시험 20문제 10시</p>
+    
+    <div id="header">
+        <h1>Header</h1>
+    </div>
+    <div id="wrap">
+        <div id="aside">
+            <h1>Aside</h1>
+        </div>
+        <div id="content">
+            <h1>Content</h1>
+        </div>
+    </div>
+
+    <ul>
+        <li class="select">lorem ipsum</li>
+        <li>lorem ipsum</li>        
+        <li class="select">lorem ipsum</li>
+        <li>lorem ipsum</li>
+    </ul>
+
+    <!-- .class 2개 적용 -->
+    <h1 class="item header">Lorem ipsum</h1>
+
+    <h1 class="select">Lorem ipsum</h1>
+    <ul>
+        <li class="select">Lorem ipsum</li>
+        <li>Lorem ipsum</li>
+        <li>Lorem ipsum</li>
+        <li>Lorem ipsum</li>
+    </ul>
+    <ol>
+        <li>ol 숫자</li>
+    </ol>
+
+    <form>
+        <input type="text" />
+        <input type="password" />
+    </form>
+
+    <div id="header">
+        <h1 class="title">자손선택자</h1>
+        <div>
+            <h1>Navigation</h1>
+        </div>
+        <div id="section">
+            <h1>자손선택자</h1>
+        </div>
+    </div>
+
+    <h2 id="p2"style="background-color: red;">hello g</h2>
+    <h2 style="background-color: #00FF00;">hello</h2>
+    <h2 style="background-color: rgb(0,255,0);">hello</h2>
+
+
+
+</body>
+</html>

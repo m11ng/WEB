@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <table id="bingo" border="1"></table>
+    <script>
+       // 배열 생성 - 일차원 배열로도 빙고만들기가 가능해.
+       var bingo = [];
+       bingo.length = 25;
+       // 배열 초기화
+       for(i=0; i<bingo.length; i++){
+            bingo[i] = i+1;
+       }
+       // 배열 섞기
+       bingo.sort((a,b)=> Math.random() - 0.5);
+
+       // 문자열
+       var str = '';
+       for(j=0; j<bingo.length; j++){
+            if(j%5==0) { str+='<tr>' }
+            str += '<td>' + bingo[j];
+       }
+       
+       document.getElementById("bingo").innerHTML = str;
+
+    </script>
+</body>
+</html>

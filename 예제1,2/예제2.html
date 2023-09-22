@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .span{
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        기본형태 :
+        function moveTo(from, to){}
+        
+        1. left -> right 옮기기
+        function moveLeftToRight() {
+            moveTo(left, right)
+        }
+
+        2. right -> left 옮기기
+        function moveRightToLeft() {
+            moveTo(right, left)
+        }
+     -->
+
+     <span class="span">
+         <select multiple="multiple">
+             <option value="농구">농구</option>
+             <option value="배구">배구</option>
+             <option value="야구">야구</option>
+             <option value="축구">축구</option>
+         </select>
+     </span>
+
+     <span class="span">
+         <input type="button" value=">"><br>
+         <input type="button" value="<"><br>
+         <input type="button" value="<<"><br>
+         <input type="button" value=">>"><br>
+     </span>
+
+     <span class="span">
+         <textarea name="" id="" cols="30" rows="10"></textarea>
+     </span>
+    
+</body>
+</html>

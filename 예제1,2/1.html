@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- 1. 틀 만들기 -->
+    <!-- 2. 이벤트를 걸기 -->
+    <!-- 3. 전체 이벤트 & 전체 선택과 해제가 있어야 함.-->
+    <!-- 4. 선택 이벤트 -->
+    <input type="checkbox" name="all" id="checkAll" onclick="checkAll()">전체<br>
+    
+    <input type="checkbox" name="chk" value="농구" onclick="checked()">농구<br>
+    <input type="checkbox" name="chk" value="배구" onclick="checked()">배구<br>
+    <input type="checkbox" name="chk" value="야구" onclick="checked()">야구<br>
+    <input type="checkbox" name="chk" value="축구" onclick="checked()">축구<br>
+
+    <textarea name="" id="textbox" cols="30" rows="10"></textarea>
+
+    <script>
+        // 전체 선택 & 해제
+        function checkAll() {
+            var checkAllCheckbox = document.getElementById("checkAll");
+            var checkboxes = document.getElementsByName("chk");
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = checkAllCheckbox.checked;
+            }
+            // checked(); 
+        }
+
+        // function checked() {
+        //     var checkboxes = document.getElementsByName("chk");
+        //     var selectedSports = [];
+
+        //     for (var i = 0; i < checkboxes.length; i++) {
+        //         if (checkboxes[i].checked) {
+        //             selectedSports.push(checkboxes[i].value);
+        //         }
+        //     }
+
+        //     var textbox = document.getElementById("textbox");
+        //     textbox.value = selectedSports.join(", "); // 선택된 스포츠 값을 텍스트 상자에 표시
+        // }
+    </script>
+
+
+    <select type="" name="" id=""></select>
+</body>
+</html>

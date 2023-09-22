@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="checkbox" name="all" id="checkAll" onclick="checkAll()">전체<br>
+    
+    <input type="checkbox" name="chk" value="농구" onclick="checked()">농구<br>
+    <input type="checkbox" name="chk" value="배구" onclick="checked()">배구<br>
+    <input type="checkbox" name="chk" value="야구" onclick="checked()">야구<br>
+    <input type="checkbox" name="chk" value="축구" onclick="checked()">축구<br>
+
+    <textarea name="" id="textbox" cols="30" rows="10"></textarea>
+
+    <script>
+        function checkAll() {
+            var checkAllCheckbox = document.getElementById("checkAll");
+            var checkboxes = document.getElementsByName("chk");
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                checkboxes[i].checked = checkAllCheckbox.checked;
+            }
+            checked(); // 선택된 체크박스 값을 표시
+        }
+
+        function checked() {
+            var checkboxes = document.getElementsByName("chk");
+            var selectedSports = [];
+
+            for (var i = 0; i < checkboxes.length; i++) {
+                if (checkboxes[i].checked) {
+                    selectedSports.push(checkboxes[i].value);
+                }
+            }
+
+            var textbox = document.getElementById("textbox");
+            textbox.value = selectedSports.join(", "); // 선택된 스포츠를 텍스트 상자에 표시
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <h1 id="header">Click me!!!</h1>
+    <script>
+        // window.onload : js문서가 준비된 상항 이후에 발동하도록 도와주는 애.
+        window.onload = function() {
+            var header = document.getElementById('header');
+            header.onclick = click; // 얘랑
+            // header.onclick = function() { alert("Hello");}
+            // header.onclick = null;
+        }
+        function click() { alert('Hello');}  // 얘랑 세트
+
+    </script>
+
+
+
+
+
+
+
+    <h1 id="header1" onmouseover="this.style.color='red'"
+        onmouseout="this.style.color='blue'">Click me 2</h1>
+    <script>
+        window.onload = function() {
+            var header = document.getElementById('header');
+        }
+        function click() { alert("Hello");}
+    </script>
+
+</body>
+</html>

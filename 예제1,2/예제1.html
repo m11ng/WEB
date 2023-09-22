@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CheckBox</title>
+</head>
+<body>
+    <!-- 
+        선택
+        1. 체크
+        2. displaying
+     -->
+    <!-- 
+        1. 태그 만들기
+        2. 태그에 이벤트 주기(텍스트에 뿌려주기)
+        3. 이벤트 : (1)전체 선택/ 전체 해제, (2)선택 이벤트
+        4.
+
+     -->
+
+    <input type="checkbox" id="checkAll">전체
+    <input type="checkbox" class="checked" value="농구">농구
+    <input type="checkbox" class="checked" value="배구">배구
+    <input type="checkbox" class="checked" value="야구">야구
+    <input type="checkbox" class="checked" value="축구">축구
+
+    <textarea name="" id="textbox" cols="30" rows="10"></textarea>
+
+    <script>
+        
+        // 전체 선택 이벤트
+        // 전체 체크를 누르면, 농구배구야구축구가 모두 선택되어야하고, textarea에 담겨야함.
+        window.onload = function() {
+            // 다큐먼트에서 요소를 가져온다.
+            var checkAll = document.getElementById('checkAll'); // 태그를 객체로 담아왔어.
+            var checked = document.getElementsByClassName('checked'); // 나중에 이걸로 모두트루면 전체체크도 트루로 바꾸는거 하면되겠다.
+            var inTextbox = [];
+
+            checkAll.onclick = function() {
+                // alert("gg");
+                // 전체 체크가 눌렸다면, 농구배구야구축구도 모두 checked가 되야 한다.
+                if(checkAll.checked){ // 전체체크가 눌리면 = true이면
+                    // 나머지 개별체크박스도 true로 상태변경해줘야한다. // 그럴려면 요소를 가져와서 일단 변수에 담아주고.
+                    inputs = document.getElementsByTagName("input");
+                    // 그 요소 하나하나를 true로 바꿔줘야하니까. for문을 돌린다.
+
+                    for(i=0; i<inputs.length; i++){
+                        inputs[i].checked = true;
+                        inTextbox.push(checked[i]);
+                    }
+                    document.getElementsByTagName('textarea').innerHTML = textBox;
+
+
+                }
+                // 이제 전체체크를 해제하면 다같이 해제되어야하니까. 2가지 경우니까
+                // else가 와야지
+                else {
+                    inputs = document.getElementsByTagName("input")
+                    for(i=0; i<inputs.length; i++){
+                        inputs[i].checked = false;
+                    }
+                }
+
+                // 전체 체크 전체 해제 했는데.textarea에 넣어줘야 하니까.
+
+
+            };
+        }
+ 
+ 
+    </script>
+
+
+    
+    
+</body>
+</html>

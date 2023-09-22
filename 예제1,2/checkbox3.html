@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #chk {
+            display: inline-block;
+        }
+    </style>
+
+</head>
+<body> 
+
+    <!-- 1. 일단 태그로 틀을 만들어 놓자 -->
+    <!-- 2. 이벤트를 걸기 -->
+    <!-- 3. 전체 이벤트 & 전체선택과 해제가 있어야 함.-->
+    <!-- 4. 선택 이벤트 -->
+    
+ 
+       <input type="checkbox" name="all" id="checkAll" onclick="checkAll()">전체<br>
+       
+       <input type="checkbox" name="chk" value="농구" onclick="checked()">농구<br>
+       <input type="checkbox" name="chk" value="배구" onclick="checked()">배구<br>
+       <input type="checkbox" name="chk" value="야구" onclick="checked()">야구<br>
+       <input type="checkbox" name="chk" value="축구" onclick="checked()">축구<br>
+
+
+    
+        <textarea name="textbox" id="textbox" cols="30" rows="10"></textarea>
+
+ 
+    <script>
+        // textarea에 value 넣기
+        function checked() {
+            var checkbox = document.getElementsByName("chk");
+            var checked = [];
+
+            for(var i=0; i<checkbox.length; i++){
+                if(checkbox[i].checked){
+                    checked.push(checkbox[i].value);
+                }
+            }
+            document.querySelector("textarea").innerHTML = checked;
+        }
+
+        // 전체선택
+        function checkAll() {
+            var allbox = document.getElementsByName('chk');
+            var checkedAll = [];
+
+            for(var i=0; i<allbox.length; i++){
+                allbox[i].checked = true;
+                checkedAll.push(allbox[i].value);
+            }
+            document.querySelector("textarea").innerHTML = checkedAll;
+        }
+
+
+
+
+    </script>
+
+
+    
+</body>
+</html>

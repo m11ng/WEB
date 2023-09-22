@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1 id="header">Click me!!!</h1>
+    <script>
+        window.onload = function() {
+            var header = document.getElementById('header');
+            header.onclick = click; // 얘랑
+            // header.onclick = function() { alert("Hello");}
+            // header.onclick = null;
+        }
+        function click() { alert('Hello');}  // 얘랑 세트
+
+    </script>
+
+    <h1 id="header1" onmouseover="this.style.color='red'"
+        onmouseout="this.style.color='blue'">Click me 2</h1>
+    <script>
+        window.onload = function() {
+            var header = document.getElementById('header');
+        }
+        function click() { alert("Hello");}
+    </script>
+
+    <!-- --------------------------------------------------------------------------------------- -->
+
+    <!-- 체크박스 부터 만들기 -->
+    <span>
+        <label><input type="checkbox" onclick="checkAll()" name="checkAll" id="checkAll">전체선택</label><br>
+        <label><input type="checkbox" onclick="check()" name="sports" value="농구"></label>농구<br>
+        <label><input type="checkbox" onclick="check()" name="sports" value="배구"></label>배구<br> 
+        <label><input type="checkbox" onclick="check()" name="sports" value="야구"></label>야구<br>
+        <label><input type="checkbox" onclick="check()" name="sports" value="축구"></label>축구<br>
+    </span>
+
+    <textarea name="textbox" id="" cols="60" rows="20"></textarea><br>
+
+    <!-- checkAll 이벤트 걸기 -->
+    <script>
+        window.onload = function() {
+            var checkAll = document.getElementsByName('sports');
+        }
+        
+
+        document.querySelector("textarea").innerHTML = checked;
+
+        // Check
+        document.getElementById("checkbox").checked = true;
+        
+        // Uncheck
+        document.getElementById("checkbox").checked = false;
+
+
+        function check() {
+            var checkbox = document.getElementsByName('sports');
+            var checked = [];
+    
+            for(i=0; i<checkbox.length; i++){
+                if(checkbox[i].checked) {
+                    checked.push(checkbox[i].value);
+                }
+            }
+            
+            
+        }
+        document.querySelector("textarea").innerHTML = checked;
+
+    </script>
+
+    <select multiple>
+        <option>농구</option>
+        <option>축구</option>
+        <option>야구</option>
+        <option>배구</option>
+    </select><br>
+    <button>버튼</button>
+
+
+    
+</body>
+</html>

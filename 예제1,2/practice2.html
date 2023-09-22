@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+
+    </style>
+</head>
+<body>
+        <span>
+
+            <label><input type="checkbox" onclick="checkAll()">전체 선택</label><br>
+            <label><input type="checkbox" name="sport" value="농구" onclick="slicked()">농구</label><br>
+            <label><input type="checkbox" name="sport" value="야구" onclick="slicked()">야구</label><br>
+            <label><input type="checkbox" name="sport" value="축구" onclick="slicked()">축구</label><br>
+            <label><input type="checkbox" name="sport" value="하키" onclick="slicked()">하키</label><br><br>
+            
+        </span>
+
+        
+        <textarea name="textbox" cols="60" rows="20" ></textarea>
+ 
+
+    <script>
+    //Textarea에 checked된 value 넣기
+
+    function slicked(){
+
+        var checkbox = document.getElementsByName('sport');
+
+        var checked = [];
+
+ 
+
+        for( var i=0; i<checkbox.length; i++){
+
+            if(checkbox[i].checked){
+
+                checked.push(checkbox[i].value);
+
+            }
+
+        }
+
+        document.querySelector("textarea").innerHTML = checked;
+
+    }
+
+    
+
+    //전체 선택 
+
+    function checkAll(){
+
+        var allbox = document.getElementsByName('sport');  
+
+        var checkedall = []; 
+
+       
+
+        for(var i=0; i<allbox.length; i++){
+
+              allbox[i].checked = true; 
+
+              checkedall.push(allbox[i].value);
+
+        }
+
+        document.querySelector("textarea").innerHTML = checkedall;
+
+    }
+
+ 
+
+   
+
+    </script>
+
+</body>
+
+</html>
