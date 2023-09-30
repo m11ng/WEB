@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		img {
+				width: 100px;
+		} 
+	</style>
+</head>
+<body>
+<!-- 진권씨 성우씨 -->
+	<div>
+		<button id="show_btn">show</button>
+		<button id="hide_btn">hide</button>
+		<button id="shuffle_btn">shuffle</button>
+	</div>
+	<div id="card_board"></div>
+
+	<script>
+		window.onload = function() {
+			var show = document.getElementById('show_btn');
+			var hide = document.getElementById('hide_btn');
+			var shuffle = document.getElementById('shuffle_btn');
+			var card_board = document.getElementById('card_board');
+			var imgs = document.querySelectorAll('img'); 
+			let cardArr = [];
+			console.log(imgs);
+			for(let i=0; i<52; i++){
+					cardArr.push('<img src="/images/'+i+'.png">'); // cardArr.push(`<img src="/images/${i}.png">`);
+			}
+			// ----------------------------------------------------------------------------
+			
+
+			showCard(); // 처음 화면 불러오기
+			
+			// show()
+			show.onclick = showCard; // showCard()하면 안되는 거 알기
+
+			function showCard() {       
+				card_board.innerHTML = ''; // 초기화
+				for(let i=0; i<52; i++) {
+					// imgs[i].src = cardArr[i]
+					// card_board.appendChild()
+					card_board.innerHTML += cardArr[i];
+				}
+			}
+		
+			console.log(imgs);
+			// hide()
+			hide.onclick = hideCard;
+			
+			function hideCard() {
+				card_board.innerHTML = '';
+				for (let i = 0; i < 52; i++) {
+					card_board.innerHTML += '<img src="/images/52.png">';
+				}
+
+				// 위에서 innerHTML에 심어준 애를 다시 가져와야지
+				// var imgs = document.querySelectorAll('img'); 
+				// console.dir(imgs);
+
+				// 누르면 앞면 보이게 기능 추가
+				for(let i=0; i<52; i++){
+					imgs[i].onclick = hideClick;
+				}
+			}
+
+			// shuffle() => 섞은걸 보여주기
+			shuffle.onclick = shuffleCard
+			
+			function shuffleCard () {
+				card_board.innerHTML = ''; // 초기화
+				cardArr.sort((a,b)=>Math.random()-0.5);
+				card_board.innerHTML += cardArr;
+				
+				// for(let i=0; i<52; i++){
+				// 	card_board.innerHTML += cardArr[i];
+				// }
+
+			}
+
+			// 이미지누르면 바뀌는거 이벤트
+			function hideClick(e) {
+				// console.log(e.src);
+				// console.log(1);
+				// 눌렀을 때 앞면이 보이려면 어떻게 해야하지
+				// hide[0] = show[0] 이미지를 넣어줘야지
+				// 근데 52장이니까 for문돌려야지 일단 낱개로 해봐
+				// 근데 hide이벤트 안에 imgs가 있어서.... 다시이미지를 담아와야하나.
+				// imgs[0].src를 cardArr[0].src로 바꾸고 싶음
+				// 뒷면1번 =     앞면1번
+				console.dir(e);
+				console.dir(e.target);
+
+			}
+			
+
+
+
+
+
+
+
+
+					
+			}// window.onload
+
+
+
+
+
+
+
+	</script>
+    
+</body>
+</html>

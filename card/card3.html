@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		img {
+				width: 100px;
+		} 
+	</style>
+</head>
+<body>
+	<!-- 먹킹 -->
+	<div>
+		<button id="show_btn">show</button>
+		<button id="hide_btn">hide</button>
+		<button id="shuffle_btn">shuffle</button>
+	</div>
+	<div id="card_board"></div>
+
+	<script>
+		window.onload = function() {
+			// 태그요소를 객체로 담기.
+			var show = document.getElementById('show_btn');
+			var hide = document.getElementById('hide_btn');
+			var shuffle = document.getElementById('shuffle_btn');
+			var card_board = document.getElementById('card_board');
+
+			// div 태그안에 넣어줄 카드를 담을 배열을 만든다.
+			let cardArr = [];
+			// 배열에 카드를 넣는다.
+			for(let i=0; i<52; i++){
+					cardArr.push('<img src="/images/'+i+'.png">'); // cardArr.push(`<img src="/images/${i}.png">`);
+			}
+			console.log(cardArr);
+			// ----------------------------------------------------------------------------
+			
+			// show()
+			show.onclick = function() {       
+				card_board.innerHTML = ''; // 초기화
+				for(let i=0; i<52; i++) {
+					card_board.innerHTML += cardArr[i];
+				}
+			}
+			// hide()
+			hide.onclick = function() {
+				card_board.innerHTML = '';
+				for (let i = 0; i < 52; i++) {
+					card_board.innerHTML += '<img src="/images/52.png">';
+				}
+
+			}
+
+			// 이거 다시!!!!!!!!!!!!!!!!!!!!!!!!
+			//shuffle()
+			tmp = [];
+			shuffle.onclick = function(){
+
+				for(let i=0; i<52; i++){
+					tmp.push('<img src="/images/'+i+'.png">'); 
+				}
+				tmp.sort((a,b)=>Math.random()-0.5);
+
+				console.log(tmp);
+				card_board.innerHTML = tmp;
+				
+				// src를 변수에 저장하는거부터 시작하기.
+				for(i=0; i<52; i++){
+					card_board[i].src = "/images/"+i+".png";
+				}
+				
+			}
+
+
+
+			// kmgf 이미지 하나하나 
+
+
+
+
+
+
+
+
+
+
+
+
+
+					
+			}// window.onload
+
+
+
+
+
+
+
+	</script>
+    
+</body>
+</html>

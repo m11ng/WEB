@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        padding: 100px;
+      }
+      img {
+        width: 100px;
+        margin: auto 7px;
+        margin-bottom: 7px;
+      }
+      img:hover {
+        outline: red;
+        background-color: red;
+        box-shadow: 4px 4px 3px #666;
+      }
+      button {
+        position: relative;
+        margin-right: 10px;
+        width: 100px;
+        height: 30px;
+        left: 5px;
+        bottom: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 1. 레이아웃 짜기 -->
+    <button id="hide">HIDE</button>
+    <!-- REFACTOR 버튼 하나로 합치기 -->
+    <button id="show">SHOW</button>
+    <button id="shuffle">SHUFFLE</button>
+    <!-- 2. 요소에 접근 -->
+    <!-- 3. 이벤트 등록 -->
+    <script>
+      for (let i = 0; i < 52; i++) {
+        if (i % 13 == 0) document.write(`<br >`);
+        document.write(`<img id='${i}' src='../card_img/backImg.jpg'>`);
+      }
+
+      window.onload = function () {
+        const hideCheckBtn = document.getElementById("hide");
+        const showCheckBtn = document.getElementById("show");
+        const shuffleCheckBtn = document.getElementById("shuffle");
+        const imgArr = document.getElementsByTagName("img");
+        const DEFAULT_IMG = "../card_img/backImg.jpg";
+        console.log(imgArr);
+        let chooseFirst;
+
+        const arr = [];
+        (function () {
+          for (let i = 0; i < 52; i++) arr.push("../card_img/" + i + ".png");
+          for (let i = 0; i < imgArr.length; i++) {
+            imgArr[i].is_hide = true;
+          }
+        })();
+
+        // REFACTOR: foreach 로 바꿔보기
+        // FEAT: 전체 카드 가리기
+        hideCheckBtn.onclick = (e) => {
+          for (let i = 0; i < imgArr.length; i++) {
+            imgArr[i].src = DEFAULT_IMG;
+          }
+        };
+
+        // FEAT 전체 카드 보여주기
+        showCheckBtn.onclick = () => {
+          for (let i = 0; i < arr.length; i++) {
+            imgArr[i].src = arr[i];
+          }
+        };
+
+        // FEAT 전체 카드 섞기
+        shuffleCheckBtn.onclick = () => {
+          let num = 0;
+          arr.sort(() => Math.random() - 0.5);
+          //   arr.forEach((e) => (arr[num++].src = e));
+          arr.forEach((imgName) => (imgArr[num++].src = imgName));
+        };
+
+        /*
+        FEAT 카드 맞추기
+        1. 이미지를 개별적으로 클릭한다. 카드가 뒤집힌다.
+        2. 내가 첫 번째로 고른 이미지가 어떤 이미지인지 기억해야한다.(chooseFirst)
+            - 앞으로 놓는다.
+        3. 내가 두 번째로 고른 이미지가 CHECK_SAME_IMG 라면 두 개의 카드를 뒤집어 놓는다.(별개의 함수로 빼기)
+            - 만약 다른 카드라면? 다시 뒤로 덮어놓는다.
+        4. count가 두 번째일 때마다 0으로 초기화한다.
+        */
+
+        let count = 0;
+        for (let i = 0; i < imgArr.length; i++) {
+          const CHECK_SAME_IMG = parseInt(imgArr[i].id);
+
+          // 카드 클릭
+          imgArr[i].onclick = () => {
+            if (count === 0) {
+              chooseFirst = parseInt(arr[i].split(".")[2].substring(10));
+            }
+
+            // 카드 뒤집기
+            if (imgArr[i].is_hide) {
+              count++;
+              imgArr[i].is_hide = false;
+              imgArr[i].src = arr[i];
+
+              if (count === 2) {
+                count = 0;
+
+                if (!(chooseFirst + 26 === CHECK_SAME_IMG)) {
+                  setTimeout(() => {
+                    // 첫 번째 선택된 이미지
+                    imgArr[chooseFirst].is_hide = true;
+                    imgArr[chooseFirst].src = DEFAULT_IMG;
+
+                    // 두 번째 선택된 이미지
+                    imgArr[i].is_hide = true;
+                    imgArr[i].src = DEFAULT_IMG;
+                  }, 500);
+                }
+              }
+            }
+          };
+        }
+      };
+    </script>
+  </body>
+</html>

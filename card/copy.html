@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		body {
+			padding: 100px;
+		}
+		img {
+			width: 100px;
+			margin: auto;
+			margin-bottom: 7px;
+		}
+		img:hover {
+			outline: red;
+			background-color: red;
+			box-shadow: 5px 5px 5px #666;
+		}
+		button {
+			position: relative;
+			margin-right: 10px;
+			width: 100px;
+			height: 30px;
+			left: 5px;
+			bottom: 50px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 태그 레이아웃 -->
+	<button id="hide">hide</button>
+	<button id="show">show</button>
+	<button id="shuffle">shuffle</button>
+
+
+	<!-- 이미지 태그는 js로 만드려고 함 각 이미지에 id 부여-->
+	<script>
+
+		for(let i=0; i<52; i++){
+			document.write(`<img id="${i}" src="/images/52.png">`);
+		}
+
+		// 필요한 변수가 뭔지 생각해보고 짜면서 천천히 적어보기
+		window.onload = function() {
+			// 태그객체들 가져오기
+			const hide = document.getElementById('hide');
+			const show = document.getElementById('show');
+			const shuffle = document.getElementById('shuffle');
+			const imgArr = document.querySelectorAll('img');
+
+			// 뒷면으로 바꿔줄 기본 변수하나 
+			let DEFAULT_IMG = "/images/52.png";
+
+			// 익명함수로. 이미지DOM객체 만들기
+			// 뒷면으로 세팅
+			// 2개의 배열을 활용해야함
+			// 카드 정보담을 배열, DOM에 뿌려줄 배열
+			const arr = [];
+			let hided;
+			let chooseFirst;
+			
+			(function() {
+				for(let i=0; i<52; i++){
+					arr[i] = "/images/"+i+".png"; // 카드정보 저장
+				}
+				// console.dir(arr);
+				for(let i=0; i<52; i++){
+					imgArr[i].hided = true; // 태그객체에 속성달아주기
+				}
+
+			})();
+
+			// hide
+			hide.onclick = function () {
+				for(let i=0; i<52; i++){
+					imgArr[i].src = "/images/52.png";
+					is_hide = true; 
+				}
+				// console.dir(imgArr[0]);
+			}
+
+			// show
+			show.onclick = function() {
+				for(let i=0; i<52; i++){
+					imgArr[i].src = arr[i];
+					is_hide = false;
+				}
+				// console.dir(imgArr[51]);
+			}
+
+			// shuffle
+			// hide 버튼을 누르고 shuffle을 눌렀을때, hide가 되어야하는데 안됨
+			shuffle.onclick = function() {
+				arr.sort((a,b) => Math.random() - .5);
+				// console.dir(imgArr[0]);
+				for(let i=0; i<52; i++){
+					if(imgArr[i].hided === true){
+						imgArr[i].src = DEFAULT_IMG;
+					}
+					else {
+						imgArr[i].src = arr[i];
+					}
+				}
+
+			}
+
+			// 카드를 눌렀을 때, 뒤집
+
+		};//window.onload
+
+
+
+	</script>
+	
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카드게임</title>
+    <style>
+        .img{
+            width: 100px;
+            height: 150px;
+        }
+        #hImg{
+            visibility: hidden;
+        }
+    </style>
+    <!-- 
+        문제에 대한 전체 적인 틀과 기능에 대해 먼저 글로 작성해놓기.
+        글이 잘 정리 되어 있어야 올바른 코드를 짤 수 있음.
+        => 설계 부분이 잘되야 함
+
+        < 카드 짝 맞추기 예제>
+        52 * 52 
+        => 기능 먼저 해보고 짝 맞추는걸 해보라고 하셨음 : hide, show, shuffle 
+           1.hide 
+           2.show 
+           3.shuffle
+
+            글 정리
+            내가 생각한 룰:
+            1.hide
+            처음부터? 뒷면(hide)이 보여야 한다
+            카드가 섞여(card) 있어야 한다
+
+            show를 눌렀을때 shuffle된 show가 보여져야함
+
+            첫번째 카드를 눌렀을때(show)
+                두번째 카드를 한번만 선택할 수 있고
+                만약 첫번째카드와 두번째카드가 색상&숫자가 일치하면 둘다 show로 놓기 + 또 하기 (무한반복해야되는거아냐??)
+                만약 첫번째카드와 두번째카드가 석상&숫자가 불일치면 둘다 hiden로 놓기 + 또 하기(무한반복해야되는거아냐?? 뭐지)
+
+     -->
+</head>
+<body>
+    <button id="hide_btn" onclick="hide()">hide</button>
+    <button id="show_btn" onclick="show()">show</button>
+    <button id="shuffle_btn" onclick="shuffle()">shuffle</button>
+    <br>
+    
+    <div id="board">
+
+    </div>
+
+    <script>
+        // 0. 이미지 넣기 <img> 태그 반복문
+            for(i=0; i<52; i++){
+                if(i%13==0) { document.write("<br>") } 
+                document.write("<img class=img  onclick= selectcard("+i+") src=images/" + i + ".png>");
+            }
+            
+        // 1. 가져온 이미지는 전역변수로 쓰기.
+            var imgArr = document.getElementsByTagName('img');
+           
+        // 1. 버튼에 이벤트 걸어주기 : hide(), show(), shuffle()
+
+        // hide // 반복문으로 뒤집기?? => 카드의 뒷면을 보여준다는 뜻.
+            function hide() {
+                for(i=0; i<imgArr.length; i++){ // 담아온 모든 이미지를 
+                    imgArr[i].src = `./images/52.png`; // 뒷면 이미지로 *변경*
+                }
+            }
+
+        // show
+            function show() {
+                for(i=0; i<imgArr.length; i++){
+                    // imgArr[i].src = `./images/${i}.png`; 
+                    imgArr[i].src = './images/' + i + '.png';
+                }
+            }
+
+        // shuffle
+            function shuffle() {
+                var board = document.getElementById('board');
+                // board.innerHTML = '<img class="img" src="images/0.png">'
+                
+                
+                arr = [];
+                arr.sort((a,b) => Math.random() - .5)
+                tmp = '';
+                for(let i=0; i<52; i++) {
+                    tmp += `<img src="images/${i}.png">`;
+                }
+                board.innerHTML = tmp;
+                
+            }
+
+            // tmp += '<img src="images/'+i+'.png>';
+            // for(let i=0;i<10;i++) 
+            //     tmp += `<img src="images/${i}.png">`;
+
+            function card() {
+                var kind_max = 4;
+                var num_max = 13;
+        
+                var cardArray = [];
+            }
+
+            window.onload = function() {
+
+            }
+
+    </script>
+
+    
+</body>
+</html>

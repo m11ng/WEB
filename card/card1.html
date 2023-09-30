@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		img {
+				width: 100px;
+		} 
+	</style>
+</head>
+<body>
+	<div>
+		<button id="show_btn">show</button>
+		<button id="hide_btn">hide</button>
+		<button id="shuffle_btn">shuffle</button>
+	</div>
+	<div id="card_board"></div>
+
+	<script>
+		window.onload = function() {
+			// 태그요소를 객체로 담기.
+			var show = document.getElementById('show_btn');
+			var hide = document.getElementById('hide_btn');
+			var shuffle = document.getElementById('shuffle_btn');
+			var card_board = document.getElementById('card_board');
+
+			// div 태그안에 넣어줄 카드를 담을 배열을 만든다.
+			let cardArr = [];
+			// 배열에 카드를 넣는다.
+			for(let i=0; i<52; i++){
+					cardArr.push('<img src="/images/'+i+'.png">'); // cardArr.push(`<img src="/images/${i}.png">`);
+			}
+			// ----------------------------------------------------------------------------
+			
+			// show()
+			show.onclick = function() {       
+				card_board.innerHTML = ''; // 초기화
+				for(let i=0; i<52; i++) {
+					card_board.innerHTML += cardArr[i];
+				}
+			}
+			// hide()
+			hide.onclick = function() {
+				card_board.innerHTML = '';
+				for (let i = 0; i < 52; i++) {
+					card_board.innerHTML += '<img src="/images/52.png">';
+				}
+			}
+
+			// shuffle() => 섞은걸 보여주기
+			tmp = [];
+			shuffle.onclick = function () {
+				// cardArr.sort((a,b) => Math.random()-0.5); // 기존에 카드배열을 섞어서
+				// card_board.innerHTML = cardArr; // div에 반영
+				//했더니 show()도 섞이네
+
+				// 새로운 배열을 만들어 줘야될거 같음 // 복사
+				// 우씨 얕은복사?때문에 값이 바뀜..
+				// tmp = [];
+				// tmp = cardArr;
+				// tmp.sort((a,b)=>Math.random()-0.5);
+				// card_board.innerHTML = tmp;
+				
+				// 아예 새로 만들어줘야 하나..
+				for(let i=0; i<52; i++){
+					tmp.push('<img src="/images/'+i+'.png">'); 
+				}
+				tmp.sort((a,b)=>Math.random()-0.5);
+				card_board.innerHTML = tmp;
+				// show()에서 섞은걸 보여주기만 하면 된다고 했는데
+				// 더 좋은 방법이 없으려나
+			}
+
+			// shuffle.onclick = function (cardArr) {
+			// 	cardArr.sort((a,b)=>Math.random()-0.5);
+			// 	card_board.innerHTML = cardArr;
+			// }
+			
+
+			// 카드이미지 담아오고
+			// 이미지에 이벤트 달아주고
+			// 확인해보기
+			// 이벤트 기능만들어주고
+
+			// 근데 그냥은 안들어가고 show()버튼을 눌렀을때만, 아래 이미지가 담김.
+			// show()누르기 전까지 img태그가 만들어 지지 않아서 그런가봄
+			var imgs = document.querySelectorAll('img'); //.setAttribute("onclick", "clickCard()");
+
+
+			// 이미지 태그안에 onclick이벤트를 넣고 싶었는데!!!!!! 넣는데 한시간걸렸음..=> 결국 검색했음
+			for(let i=0; i<52; i++){
+				// imgs[i] = 'onclick="clickCard"';
+				// imgs[i].onclick="clickCard";
+				imgs[i].setAttribute("onclick", "clickCard()");
+			}
+
+			// 이미지[0]하나하나를 눌렀을 때, 이벤트를 주기. 
+			function clickCard() {
+				// 셔플에 있는 값과 hide에 있는 값을 일치시켜야 함
+				// => 일치... 숫자, 색깔.
+				// 일단 셔플에 있는 값을 가져와 보자. 활용하려고 해보자.
+				// 근데 문제는 셔플에 섞여 있는  배열을 가져와도, 거기엔 onclick속성을 만들기 전이라..
+			}
+
+			
+
+
+
+
+
+
+
+
+					
+			}// window.onload
+
+
+
+
+
+
+
+	</script>
+    
+</body>
+</html>

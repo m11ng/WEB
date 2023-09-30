@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button onclick="show1()">보이기</button>
+    <button onclick="hide1()">숨기기</button>
+    <button onclick="shuffle1()">섞기</button>
+    <div id="div1"></div>
+
+<script>
+    // 카드덱을 2차원 배열로 만든다.
+    // 첫번째에는 0~51까지 카드 번호가 들어가고, 두번째에는 앞면인지 뒷면인지를 true, false로 나타냈다.
+    arr1 = []
+    for(i=0; i<52; i++){
+        arr1[i] = [i,true]; // 카드번호와 앞,뒤 // 배열안에 요소로 배열을 넣은 거임!!!!!
+    }
+
+    checkflag = true; // checkflag가 false이면 카드를 고를 수 없다.
+    card1 = null; // 첫번째로 고른 카드.
+    card2 = null; // 두번째로 고른 카드.
+    
+
+    // 보이기 버튼 눌렀을 때
+    // => 버튼 누르면 앞면이 보이게끔 true세팅
+    function show1(){ 
+        for(i=0; i<52; i++){
+            arr1[i][1] = true;
+        }
+        refresh1();
+    }
+
+    //숨기기 버튼 눌렀을 때
+    function hide1(){
+        for(i=0; i<52; i++){
+            arr1[i][1] = false;
+        }
+        refresh1();
+    }
+
+    // 섞기 버튼 눌렀을 떄
+    function shuffle1(){
+        arr1.sort(function(a,b){return Math.random() - 0.5})
+        for(i=0; i<arr1.length; i++){
+            arr1[i][1] = true; // 섞으면 무조건 show로 보이게 
+        }
+        refresh1();
+    }
+
+    // 카드 눌렀을때 뒤집어 주기 (뒷면인 카드만)
+    // 1. 두장 선택해서 짝이 맞으면(arr[i][0] 차이는 26 or -26) 앞면 그대로 유지
+    // 2. 두장 선택해서 짝이 맞지 않으면 1초 동안만 보여준 후 다시 뒷면 보여주기
+    // checkflag 변수를 사용하는 이유는 한번에 3장이상 뒤집히는 걸 방지하기 위함임.
+    function switching1(num){ // 인라인이벤트!!!!
+        if(checkflag === false) return;   // checkflag가 false라면 return
+        if(arr1[num][1]) return;          // 이미 앞면이라면 return
+        
+        if(card1 === null) {              // card1(첫번째고른카드)가 null로 비어있다면
+            card1 = num;
+            arr1[card1][1] = true
+            refresh1();
+        }
+        else {
+            checkflag = false;
+            card2 = num;
+            arr1[card2][1] = true;
+            refresh1();
+
+            // 1st 2nd 카드가 같은 쌍이라면 다시 뒤집지 말고 그대로 앞면 유지
+            // 다른 카드 고를 수 있게 checkflag = true로 바꿔주고 card1, card2 초기화
+            if(arr1[card1][0] - arr1[card2][0] === 26 || arr1[card1][0] - arr1[card2][0] === -26){
+                card1=null;
+                card2=null;
+                checkflag = true;
+            }
+            // 1st 2nd 카드가 같은 쌍이 아니라면
+            // 카드 정보 뒷면으로 바꿔주고 refresh
+            // 다른 카드 고를 수 있게 checkflag = true로 바꿔주고 card1, card2 초기화
+            else{
+                setTimeout(function () {
+                    arr1[card1][1] = false;
+                    arr1[card2][1] = false;
+                    refresh1();
+                    card1=null;
+                    card2=null;
+                    checkflag = true;
+                }, 2000);
+            }
+        }
+    }
+
+
+    // list1에 모든 img태그(52개) 담는다.
+    // list1.length 만큼(52번) for 문 돌면서
+    // 배열 2번째 index 값이 true이면 카드 앞면을 보여주고
+    // 배열 2번째 index 값이 false이면 카드 뒷면을 보여준다.
+    function refresh1() {
+        list1 = document.getElementsByTagName("img") // 이 리스트에는 img태그에 src를 조작함 => 이미지를 넣어주고 있음 
+        for(i=0; i<list1.length; i++){
+            if(arr1[i][1] === true){ // 배열에 1번째요소가 true(앞장)이면
+                list1[i].src = `/images/${arr1[i][0]}.png` // img 0번 태그 src를 0.png로 바꿔줘
+            }
+            else{ // arr1[i][1] === false
+                list1[i].src = '/images/52.png'; // 배열에 1번째요소가 false면 img태그 src를 뒷장으로 바꿔줘
+            }
+        }
+    }
+
+    window.onload = function(){
+        str = ""
+        for(i=0; i<52; i++){
+            str += `<img src="/images/${i}.png" alt="" id="${i}" onclick="switching1(id)" width="70px" height="100px">`
+        }
+        document.getElementById("div1").innerHTML = str;
+    }
+
+    
+</script>   
+</body>
+</html>

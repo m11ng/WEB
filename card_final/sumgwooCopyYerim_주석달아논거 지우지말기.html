@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		body {
+			padding: 100px;
+		}
+		img {
+			width: 100px;
+			margin: auto;
+			margin-bottom: 7px;
+		}
+		img:hover {
+			outline: red;
+			background-color: red;
+			box-shadow: 5px 5px 5px #666;
+		}
+		button {
+			position: relative;
+			margin-right: 10px;
+			width: 100px;
+			height: 30px;
+			left: 5px;
+			bottom: 50px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 코드 리뷰와 주석 엄청써놓기 이거 나중에 코드 밀고 내가 첨부터 다시 해봐야함 -->
+	<!-- 1. 레이아웃을 짠다 : 버튼 hide, show, shuffle 만들기-->
+	<button id="hide">hide</button>
+	<button id="show">show</button>
+	<button id="shuffle">shuffle</button>
+	
+	<script>
+		// 2. 이미지태그를 for문을 이용해서 doc에 뿌려준다. 이미지에 아이디를 달아준다.
+		// 	 처음 보여지는 이미지는 뒷면이다.
+		//
+		for(let i=0; i<52; i++){
+			if(i%13==0) document.write('<br>'); 
+			document.write(`<img id='${i}' src='/images/52.png'>`);
+		}
+		
+		// 3. 요소에 접근하기 (객체 가져오기)
+		//    window.onload 이벤트 생성
+		//
+		let count = 0;
+		window.onload = function() {
+			// hide, show, shuffle, img  각 태그(객체) 가져오기
+			const hideBtn = document.getElementById('hide');
+			const showBtn = document.getElementById('show');
+			const shuffleBtn = document.getElementById('shuffle');
+			const imgArr = document.querySelectorAll('img');	
+			
+			// DEFAULT_IMG 변수를 만들고 뒷장 카드를 담아둔다.
+			// 카드 정보를 저장할 배열 하나를 만든다.
+			// 카드의 상태를 저장할 변수 하나를 만든다. t/f
+			const DEFAULT_IMG = '/images/52.png';
+			const arr = [];
+			let is_hide;
+
+			// 일회용 함수를 생성과 호출을 동시에 하며, 카드 정보 배열에 카드를 담아주고, 
+			//모든 이미지 객체에 hided라는 사용자 속성을 추가해준다.
+			// 
+			(function() {
+				for(let i=0; i<52; i++){
+					arr.push("/images/" + i + ".png");
+				}
+				for(let i=0; i<imgArr.length; i++){
+					imgArr[i].hided = true;
+				}
+			})(); 
+
+			// 4. hide 버튼
+			// 버튼을 클릭하면 카드가 뒷면으로 되어야 함
+			// is_hide 상태를 기재해준다.
+			//
+			hideCheckBtn.onclick = (e) => {
+				for(let i=0; i<52; i++){
+					imgArr[i].src = DEFAULT_IMG;
+					is_hide = false;
+				}
+			};
+
+			// 5. show버튼
+			// 현재 이미지객체에 카드정보를 넣어준다.
+			// is_hide 상태를 기재해준다
+			//
+			showCheckBtn.onclick = () => {
+				for(let i=0; i<52; i++){
+					imgArr[i].src = arr[i]; // arr에 잘 담아논 카드를 imgArr객체에줌
+					is_hide = true;
+				}
+			};
+
+			// shuffle버튼
+			// 배열을 섞어준다.
+			// 셔플버튼을 누르기 전 , hide를 누르고 셔플할지, show를 누르고 셔플할지에 따른 조건을 만든다.
+			//  
+			shuffleCheckBtn.onclick = () => {
+				let num = 0;
+				arr.sort(()=> Math.random() - 0.5);
+				if(is_hide){
+					arr.forEach((imgName) => (imgArr[num++].src = imgName) );
+				}
+				else {
+					imgArr.forEach((ele) => (imgArr[i].src = DEFAULT_IMG));
+				}
+			}
+
+			// 이제 카드 짝맞추기
+			/*
+			1. 이미지를 개별적으로 클릭한다. 카드가 뒤집힌다.
+			2. 내가 첫 번째로 고른 이미지가 어떤 이미지인지 기억해야한다.(chooseFirst)
+					- 앞으로 놓는다.
+			3. 내가 두 번째로 고른 이미지가 CHECK_SAME_IMG 라면 두 개의 카드를 뒤집어 놓는다.(별개의 함수로 빼기)
+					- 만약 다른 카드라면? 다시 뒤로 덮어놓는다.
+			4. count가 두 번째일 때마다 0으로 초기화한다.
+			*/
+
+			// for문을 돌면서
+			// 이미지 하나를 클릭했을 떄 함수를 만들어준다.
+			// 클릭하면 일어날 일을 생각해보기
+			// 뒷면을 클릭했을 때, 일어날 일
+			let chooseFirst;
+			for(let i=0; i<imgArr.length; i++){
+
+				imgArr[i].onclick = () => {
+					const CHECK_SAME_IMG = parseInt(arr[i].split(".")[0].substring(8)); // 두번째카드고유번호저장
+					if(isFirstCard()) {
+						chooseFirst = parseInt(arr[i].split(".")[0].substring(8)); // 첫번쨰카드고유번호저장
+						firstCard위치 = i; // 첫번째카드 위치
+					}
+					clickedCard = imgArr[i]; // 이미지객체 저장
+					// 카드 뒤집기
+					if(isBack(clickedCard)){
+						showCard(clickedCard, arr[i]);
+
+						if(isSecondCard()){
+							count = 0;
+
+							if(!(chooseFirst - CHECK_SAME_IMG === 26 || chooseFirst - CHECK_SAME_IMG === -26 )) {
+
+								setTimeout(() => {
+									
+									imgArr[firstCard위치].hided = true;
+									imgArr[firstCard위치].src = DEFAULT_IMG;
+
+									imgArr[i].hided = true;
+									imgArr[i].src = DEFAULT_IMG;
+								}, 500);
+							}
+							console.dir(chooseFirst);
+								console.dir(CHECK_SAME_IMG);
+						}
+					}
+
+				};
+			}
+			// 고유번호 / 위치 
+
+		};
+		function isSecondCard() {
+			return count === 2
+		}
+
+		function showCard(card, src) {
+			count++;
+			card.hided = false;
+			card.src = src;
+		}
+
+		function isBack(card) {
+			return card.hided;
+		}
+
+		function isFirstCard() {
+			return count === 0;
+		}
+
+
+
+
+	</script>
+</body>
+</html>

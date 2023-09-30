@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <titlecard>Document</titlecard/cardgame6_settimeout.html>
+</head>
+<body>
+    <button onclick="show1()">보이기</button>
+    <button onclick="hide1()">숨기기</button>
+    <button onclick="shuffle1()">섞기</button>
+    <div id="div1"></div>
+
+<script>
+    // 카드덱을 2차원 배열로 만든다.
+    // 첫번째에는 0 ~51까지 카드번호가 들어가고
+    // 두번쨰에는 앞면인지 뒷면인지를 true, false로 나타냈다.
+    arr1 = [];
+    for(i=0; i<52; i++){
+        arr1[i] = [i,true];
+    }
+    // console.dir(arr1);
+    
+    checkflag = true; // checkflag가 false이면 카드를 고를 수 없다.
+    card1 = null;
+    card2 = null;
+
+    // 보이기 버튼 눌렀을떄
+    function show1() {
+        for(i=0; i<52; i++){
+            arr1[i][1] = true;
+        }
+        refresh1();
+    }
+
+    function hide1(){
+        for(i=0; i<52; i++){
+            arr1[i][1] = false;
+        }
+        refresh1();
+    }
+    // 섞기 버튼을 눌렀을 때
+    function shuffle1() {
+        arr1.sort
+    }
+    
+</script>   
+</body>
+</html>

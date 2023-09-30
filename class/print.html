@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h2>typeof로 타입 확인하기</h2>
+	<p id="demo"></p>
+	<script>
+		let Data = new Data();
+		document.getElementById("demo").innerHTML = 
+		typeof "john" + "<br>" + // string
+		typeof 3.14 + "<br>" + // number
+		typeof NaN + "<br>" + // number
+		typeof false + "<br>" +
+		typeof [1,2,3,4] + "<br>" + // object
+		typeof {name:'john', age:34} + "<br>" + // object
+		typeof new Data() + "<br>" +
+		typeof function() {} + "<br>" +
+		typeof myCar + "<br>" +
+		typeof null;
+
+		var num = 123;
+		var num2 = new Number(123);
+		typeof num
+		console.log(typeof num);
+
+		
+	</script>
+
+	
+</body>
+</html>

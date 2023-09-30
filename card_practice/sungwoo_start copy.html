@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        padding: 100px;
+      }
+      img {
+        width: 100px;
+        margin: auto 7px;
+        margin-bottom: 7px;
+      }
+      img:hover {
+        outline: red;
+        background-color: red;
+        box-shadow: 5px 5px 5px #666;
+      }
+      button {
+        position: relative;
+        margin-right: 10px;
+        width: 100px;
+        height: 30px;
+        left: 5px;
+        bottom: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 1. 레이아웃 짜기 -->
+    <button id="hide">HIDE</button>
+    <!-- REFACTOR 버튼 하나로 합치기 -->
+    <button id="show">SHOW</button>
+    <button id="shuffle">SHUFFLE</button>
+    <!-- 2. 요소에 접근 -->
+    <!-- 3. 이벤트 등록 -->
+    <script>
+      for (let i = 0; i < 52; i++) {
+        if (i % 13 == 0) document.write(`<br >`);
+        document.write(`<img id='${i}' src='/images/52.png'>`);
+      }
+			
+      let count = 0;
+      const arr = [];
+      window.onload = function () {
+        const hideCheckBtn = document.getElementById("hide");
+        const showCheckBtn = document.getElementById("show");
+        const shuffleCheckBtn = document.getElementById("shuffle");
+        const imgArr = document.getElementsByTagName("img");
+        const DEFAULT_IMG = '/images/52.png';
+
+        (function () {
+          for (let i = 0; i < 52; i++) arr.push("/images/" + i + ".png");
+          for (let i = 0; i < imgArr.length; i++) {
+            imgArr[i].hided = true;
+          }
+        })();
+
+        let is_hide;
+
+        // REFACTOR: foreach 로 바꿔보기
+        // FEAT: 전체 카드 가리기
+        hideCheckBtn.onclick = (e) => {
+          for (let i = 0; i < imgArr.length; i++) {
+            imgArr[i].src = DEFAULT_IMG;
+            is_hide = false;
+            imgArr[i].hided = true;
+          }
+        };
+
+        // FEAT 전체 카드 보여주기
+        showCheckBtn.onclick = () => {
+          for (let i = 0; i < arr.length; i++) {
+            imgArr[i].src = arr[i];
+            is_hide = true;
+          }
+        };
+
+        // FEAT 전체 카드 섞기
+        shuffleCheckBtn.onclick = () => {
+          let num = 0;
+          arr.sort(() => Math.random() - 0.5);
+          //   arr.forEach((e) => (arr[num++].src = e));
+          if (is_hide) arr.forEach((imgName) => (imgArr[num++].src = imgName));
+          else imgArr.forEach((ele) => (imgArr[i].src = DEFAULT_IMG));
+        };
+
+        
+        for(let i=0; i<52; i++){
+          imgArr[i].onclick = () => {
+            // 첫번쨰카드인지
+            if(isFirstCard()){
+              // 정보를 저장할거야
+              firstCard돔에서위치 = i;
+              firstCard비교할값 = parseInt(arr[i].split(".")[0].substring(8));
+            }
+          
+            // 메서드에 전달할 객체. 어떤객체인지를 줘야해 변수에 담아야해 i가 전달안되서
+            clickedCard = imgArr[i] // 어떤 객체인지
+            // 첫번쨰카드가 앞면인지 뒷면인지를 확인해야하니까 첫번쨰카드의 정보도같이넘겨줌
+            if(isBack(clickedCard)) {
+              showCard(clickedCard, arr[i]); // 어떤카드인지(카드위치와), 보여줄카드정보 둘다필요
+
+              if(isSecondCard()){
+                count = 0;
+                secondCard돔에서위치 = i;
+                secondCard비교할값 = parseInt(arr[i].split(".")[0].substring(8));
+                // 비교해야지
+                if(!(firstCard비교할값 - secondCard비교할값 === 26 || firstCard비교할값 - secondCard비교할값 === -26)){
+                  // 카드를 모두 원상복구
+
+                  // 문제가 있었음. 카드가 짝이 아닐 경우 
+                  setTimeout(() => {
+                    // 첫번쨰 카드
+                    imgArr[firstCard돔에서위치].hided = true;
+                    imgArr[firstCard돔에서위치].src = DEFAULT_IMG;
+                    // 두번쨰 카드
+                    imgArr[secondCard돔에서위치].hided = true;
+                    imgArr[secondCard돔에서위치].src = DEFAULT_IMG;
+                    
+                  }, 500);
+                }
+              }
+            }
+
+          }//onclick
+        }//for
+		};
+
+    function isSecondCard() {
+      return count ===2; // 불린으로 줘야되지.
+    }
+
+    function showCard(clickedCard, src) {
+      count += 1;
+      clickedCard.hided = false;
+      clickedCard.src = src;
+    }
+
+    function isBack(clickedCard) {
+      return clickedCard.hided;
+
+    }
+
+    function isFirstCard() {
+      return count === 0; // 카운트는 카드가 현재 몇개뒤집혔는지를 확인하는.
+    }
+
+
+    </script>
+  </body>
+</html>

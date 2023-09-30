@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		body {
+			padding: 100px;
+		}
+		img {
+			width: 100px;
+			margin: auto;
+			margin-bottom: 7px;
+		}
+		img:hover {
+			outline: red;
+			background-color: red;
+			box-shadow: 5px 5px 5px #666;
+		}
+		button {
+			position: relative;
+			margin-right: 10px;
+			width: 100px;
+			height: 30px;
+			left: 5px;
+			bottom: 50px;
+		}
+	</style>
+</head>
+<body>
+	<!-- 1. 레이아웃 짜기 -->
+	<button id="hide">hide</button>
+	<!-- refector 버튼 하나로 합치기 -->
+	<button id="show">show</button>
+	<button id="shuffle">shuffle</button>
+	<!-- 2. 요소에 접근 -->
+	<!-- 3. 이벤트 등록 -->
+	<script>
+		for(let i=0; i<52; i++){
+			if(i%13==0)document.write('<br>');
+			document.write(`<img id='${i}' src='/images/52.png'>`); // 초기화면을 뒷면이미지준비, 중요한거:img에 id를 줬음. 아래에서 활용
+		}
+
+		let count = 0;
+		window.onload =function() {
+			const hideCheckBtn = document.getElementById('hide');
+			const showCheckBtn = document.getElementById('show');
+			const shuffleCheckBtn = document.getElementById('shuffle');
+			const imgArr = document.getElementsByTagName('img');
+			const DEFAULT_IMG = '/images/52.png';
+			let chooseFirst; // 이게 어디에 쓰는걸까.
+
+			const arr = []; // 이미지 52개 => 콘스트는 상수잖아. 상수의 역할, arr배열의 역할을 이해하면 좋을거같음
+			(function() { 
+				for (let i=0; i<52; i++) {
+					// arr.push(`/images/'+${i}'.png`); // 이미지경로를 적어도 되는거였군.
+					// arr.push("/images/" + i + ".png");
+					arr.push("/images/" + i + ".png") //이미지경로 안되서 바꿨음
+				}
+				for(let i=0; i<52; i++) {
+					imgArr[i].hided = true; // 이미지태그에 hided란 사용자속성?을 추가했다고 했음
+				}
+			})(); // 익명함수 쓴거같은데=> 생성과 호출 동시에
+			// 근데 내가 짠 코드가 아니니까. 어디서 콘솔을 찍고 개발자도구에서 확인해야하는지 감이 안잡힘
+			// 배열에 이미지 담아만 놨으니. 아직 카드가 보여지는게 없음.
+
+			//REFACTOR: forEach로 바꿔보기
+			// FEAT: 전체 카드 가리기
+			hideCheckBtn.onclick = (e) => {
+				for(let i=0; i<imgArr.length; i++){
+					imgArr[i].src = DEFAULT_IMG; // 이미지태그에 변수로 선언해둔 뒷면이미지(경로)로 변경
+					is_hide = false; // 하이드버튼을 누르면 변수에 false를 저장 => 나중에 아래에 쓰임
+				}
+			};
+
+			showCheckBtn.onclick = () => {
+				for (let i = 0; i < arr.length; i++) {
+					imgArr[i].src = arr[i]; // 이미지태그.경로에 잘담아논 이미지(경로)를 담아줌
+					is_hide = true; // 쇼버튼을 누르면 변수에 true를 저장 => 나중에 아래에 쓰임
+				}
+			};
+
+			shuffleCheckBtn.onclick = () => {
+				let num = 0;
+				arr.sort(() => Math.random() - 0.5); // const arr 섞고
+				//   arr.forEach((e) => (arr[num++].src = e));
+				if (is_hide) arr.forEach((imgName) => (imgArr[num++].src = imgName)); // is_hide가 true일때 실행 => arr 하나씩꺼내서 imgName에 담고 imgArr[0].src에 imgName을 담는다.
+				else imgArr.forEach((ele) => (imgArr[i].src = DEFAULT_IMG)); //is_hide가 false일때 실행 => 카드가 섞기긴하지만, imgArr하나씩 꺼내서 ele에 담고, imgArr[0].src에 기본 뒷면 이미지를 담는다.
+			};
+
+			/*
+			FEAT 카드 맞추기
+			1. 이미지를 개별적으로 클릭한다. 카드가 뒤집힌다.
+			2. 내가 첫 번째로 고른 이미지가 어떤 이미지인지 기억해야한다.(chooseFirst)
+					- 앞으로 놓는다.
+			3. 내가 두 번째로 고른 이미지가 CHECK_SAME_IMG 라면 두 개의 카드를 뒤집어 놓는다.(별개의 함수로 빼기)
+					- 만약 다른 카드라면? 다시 뒤로 덮어놓는다.
+			4. count가 두 번째일 때마다 0으로 초기화한다.
+			*/
+
+			
+			// console.log(imgArr[0].id); // id값이 궁금해서 찍어봄
+
+			for (let i = 0; i < imgArr.length; i++) {
+				const CHECK_SAME_IMG = parseInt(imgArr[i].id); //두번째카드 이미지태그[0].id를 숫자로 바꿔서 상수에 저장.
+
+				// 카드 클릭
+				imgArr[i].onclick = () => { // 카드 한장 클릭하는 imgArr[0]이걸 알아내는게 신기했는데 모르겠으면 개발자도구 왼쪽상단 화살표버튼이나, elements에 가서 힌트를 얻을 수 있음 => 화살표버튼으로 카드한장한장 눌러보면서 더블클릭하면 엘리먼츠를 보여주는데 그걸 클릭값에 이용하면 되는거니까. 잘 생각해보기
+					if (isFirstCard()) { // 첫번째카드니
+						chooseFirst = parseInt(arr[i].split(".")[0].substring(8)); //첫번쨰 카드 저장
+					}
+					// console.log(arr[0]); // 예상:배열에[0]번째문자열이들어있고, 셔플했으니. 무슨값인지는 모름 아무리 셔플로섞여도 배열의 인덱스만 알면됨.
+					// console.log(arr[i].split("."));
+					// console.log(arr[i].split(".")[0]);
+					// console.log(arr[i].split(".")[0].substring(8));
+
+					clickedCard = imgArr[i]; // 클릭된카드가 저장되야하니까., 클릭된 카드를 가지고
+					// console.dir(clickedCard);
+					// console.dir(imgArr[0]); // 위와같음
+
+					// 카드 뒤집기
+					if (isBack(clickedCard)) {// 클릭된 카드가 뒷면이니
+						// 카드를 보여준다.
+						showCard(clickedCard, arr[i]); // 클릭된뒷면의 앞면을 보여줘, 셔플의정보는 arr있으니까. 같이 넘겨줘
+
+						// 두번째 카드면
+						if (isSecondCard()) {
+							count = 0; 
+							// 순서가 없다면
+						
+
+							if (!(chooseFirst + 26 === CHECK_SAME_IMG)) { // 동일한 카드가 아니면 true
+								// console.dir(CHECK_SAME_IMG); 
+								setTimeout(() => {
+									// 첫 번째 선택된 이미지
+									imgArr[chooseFirst].hided = true; // 앞면인 첫번째 이미지 뒷면으로 만들고
+									imgArr[chooseFirst].src = DEFAULT_IMG; // 이미지src도 뒷면
+
+									// 두 번째 선택된 이미지
+									imgArr[i].hided = true;
+									imgArr[i].src = DEFAULT_IMG;
+								}, 500);
+							}
+						}
+					}
+				};
+			}
+
+		} //window.onload
+
+		function isSecondCard() { // 두번째 카드 눌렀을때
+        return count === 2;
+      }
+
+      function showCard(card, src) {
+				// console.dir(card); // 선택한 이미지객체
+				// console.dir(src); // 보여야하는 정보
+        count++;
+        card.hided = false; // 앞면이 보이니까 hided를 false로
+        card.src = src; // 뒷면이보였던카드의 src를 앞면으로보이게
+      }
+
+      function isBack(card) {
+				// console.dir(card);
+				// console.dir(card.hided);
+        return card.hided;
+      }
+
+      function isFirstCard() { // 첫번째 카드
+				// console.dir(count);
+        return count === 0;
+      }
+	</script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>카드게임</title>
     <style>
         .img{
             width: 100px;
@@ -47,19 +47,57 @@
     <button id="shuffle" onclick="shuffle()">shuffle</button>
     <br>
 
+    <div>
+        <img id="img" src="" onclick="img_info()">
+        <!-- <script>
+            document.getElementById('img').src=img_info()
+        </script> -->
+    </div>
     <script>
         // 0. 일단 사진이 화면에 보여야 하니까 사진을 넣기
-        // 0. 태그를 for문으로 넣어보기 : <body> 태그안에 for문이 안들어갔음. script로 줘야하는 조건문이였음
-            
-            // function show(){}
-            
-            for(i=0; i<52; i++){
-                // 줄바꿈이 필요함
-                if(i%13==0) {
-                    document.write("<br>")
-                } 
-                document.write("<img class=img src=images/"+i+".png>");
+        // 0. 태그를 for문으로 넣어보기 : document에서는 <body> 태그안에 for문이 안들어갔음. script에서 해야하는 거였음
+        
+            // 이미지 정보 함수
+            function img_info() {
+                var img_src;
+                for(i=0; i<52; i++){
+                    if(i%13==0) {
+                        img_src = "<br>";
+                    } 
+                    img_src = "<img class=img src=images/"+i+".png>";
+                }
+
             }
+
+            // for(i=0; i<52; i++){
+            //         // 줄바꿈이 필요함
+            //         if(i%13==0) {
+            //             document.write("<br>")
+            //         } 
+            //         document.write("<img class=img src=images/"+i+".png>");
+            //     }
+
+
+            // 버튼이ㅠㅠ 사라짐... 
+            // function show() {
+            //     // alert("hi") // 먼저 확인.
+            //     // var imgArr = document.getElementsByTagName('img');
+
+            //     // for(i=0; i<imgArr.length; i++){ // 담아온 모든 이미지를 
+            //     //     imgArr[i].src; // 뿌려줘야 할것 같음.
+            //     // }
+            //     // document.write("<img class=img src=images/"+i+".png>");
+                
+            //     for(i=0; i<52; i++){
+            //     // 줄바꿈이 필요함
+            //     if(i%13==0) {
+            //         document.write("<br>")
+            //     } 
+            //     document.write("<img class=img src=images/"+i+".png width='100px'>");
+            // }
+            // }
+                
+                
         // 1. hide 이벤트 걸어주기.
         // 1. 뒷면 카드도 화면에 뿌리고 그걸 가져와야 할거 같은데.. 일단뒷면카드 효과로가려놓자
             document.write("<img id=hImg class=img src=images/52.png>");
@@ -79,25 +117,25 @@
         
         // 2. show 이벤트 걸어주기.
         // 2. hide와 반대로 하면 될 것 같음?? 성공하면 '된다'로 수정해야지.
-            function show() {
-                // 아래 2줄은 코드의 중복인데 나중에 줄여보거나, 밖으로 빼자.
-                var imgArr = document.getElementsByTagName('img'); // --; 이미..뒷면값이 들어있는애
-                var tmpArr = [];
+            // function show() {
+            //     // 아래 2줄은 코드의 중복인데 나중에 줄여보거나, 밖으로 빼자.
+            //     var imgArr = document.getElementsByTagName('img'); // --; 이미..뒷면값이 들어있는애
+            //     var tmpArr = [];
 
-                // 히든 이미지를 다시 원상복구 어떻게 하지? tmpArr 빈배열 필요?
+            //     // 히든 이미지를 다시 원상복구 어떻게 하지? tmpArr 빈배열 필요?
  
-                // 개발자 도구 찍어도 뒷면 이미지에서 바뀌지 않음
-                // 왜지????? : document.write라서 그런가..
-                // 이미 바뀐 애를 tmp에 담고 tmp를 새론이미지.. = tmp해보자
-                // console.dir(tmpArr[i])
+            //     // 개발자 도구 찍어도 뒷면 이미지에서 바뀌지 않음
+            //     // 왜지????? : document.write라서 그런가..
+            //     // 이미 바뀐 애를 tmp에 담고 tmp를 새론이미지.. = tmp해보자
+            //     // console.dir(tmpArr[i])
 
-                for(i=0; i<imgArr; i++){
-                    tmpArr = document.write("<img class=img src=images/"+i+".png>");
-                } 
-                imgArr[i].src = tmpArr[i].src;
+            //     for(i=0; i<imgArr; i++){
+            //         tmpArr = document.write("<img class=img src=images/"+i+".png>");
+            //     } 
+            //     imgArr[i].src = tmpArr[i].src;
 
                 
-            }
+            // }
 
 
             function shuffle() {
@@ -120,7 +158,6 @@
 
     </script>
 
-   
     
 </body>
 </html>

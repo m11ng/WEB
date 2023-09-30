@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        padding: 100px;
+      }
+      img {
+        width: 100px;
+        margin: auto 7px;
+        margin-bottom: 7px;
+      }
+      img:hover {
+        outline: red;
+        background-color: red;
+        box-shadow: 5px 5px 5px #666;
+      }
+      button {
+        position: relative;
+        margin-right: 10px;
+        width: 100px;
+        height: 30px;
+        left: 5px;
+        bottom: 50px;
+      }
+    </style>
+  </head>
+  <body>
+
+    <button id="hide">HIDE</button>
+    <button id="show">SHOW</button>
+    <button id="shuffle">SHUFFLE</button>
+
+    <script>
+
+      // 이미지 for문으로 뿌려주고, 첫화면은 카드 뒤집어진 화면으로 줌
+      for(let i=0; i<52; i++){
+        if(i%13==0){
+          document.write('<br>');
+        }
+        document.write('<img src="/images/52.png">');
+      }
+
+      window.onload = function () {
+        // 객체 가져오고
+        const hide = document.getElementById('hide');
+        const show = document.getElementById('show');
+        const shuffle = document.getElementById('shuffle');
+        const imgArr = document.querySelectorAll('img');
+        const DEFAULT_IMG = "/images/52.png";
+
+        // 배열하나에 카드정보담고, 카드에 사용자속성 추가
+        const arr = [];
+        (function () {
+          for(let i=0; i<52; i++){
+            arr[i] = "/images/"+i+".png";
+          }
+          for(let i=0; i<52; i++){
+            imgArr[i].hided = true;
+          }
+
+        })();
+        // console.dir(arr);
+        // console.dir(imgArr);
+
+        let hideNshowButton;
+
+        // 버튼만들기 3개
+        // 셔플은 섞고, 하이드버튼눌렀을떄 넘어올떄랑, 쇼버튼눌렀을떄넘어올떄에 따른 조건을 걸어주기 if()else
+
+        hide.onclick = function() {
+          for(let i=0; i<52; i++){
+            imgArr[i].src = DEFAULT_IMG; // 버튼누르면 모두 뒷면
+            imgArr[i].hided = true; // 속성도 트루로
+
+            // 셔플에 진입했을떄를 위한
+            hideNshowButton = false;
+          }
+        }
+
+        show.onclick = function() {
+          for(let i=0; i<52; i++){
+            imgArr[i].src = arr[i];
+            imgArr[i].hided = false;
+
+            // 셔플에 진입했을떄를 위한
+            hideNshowButton = true;
+          }
+        }
+
+        shuffle.onclick = function() {
+          arr.sort(()=> Math.random() - .5);
+          if(hideNshowButton) { // true면 show버튼 후shuffle
+            for(let i=0; i<52; i++){
+            imgArr[i].src = arr[i];
+            }
+          }
+          else {
+            for(let i=0; i<52; i++){
+            imgArr[i].src = DEFAULT_IMG;
+            }
+          }
+        }
+
+        // 카드 뒤집기
+        // 이제 카드 비교를 할건데
+        // 카드하나를 클릭했을때 이게 첫번쨰 카드고, 앞면인지 뒷면인지 생각해야하고
+        // 두번쨰로 카드를 클릭했을떄 이 카드와 첫번쨰 카드를 비교해야하고 맞으면 show로 보이게
+        // 다른 카드면 뒷면으로 보이게 해야하고 => 시간차를 두고 뒤집어주기
+        // 2개이상의 카드를 누르지 못하게 규칙을 주는 변수도 필요하고
+        // 첫번쨰 카드를 기억할 변수도 필요하고, 두번쨰 카드를 기억할 변수도 필요하다
+
+        // 첫번쨰 카드와 두번쨰 카드를 비교하는 규칙이 이 게임에는 이미 정해져 있음 => 순서가 있음/ 순서를 생각해보면 규칙이 26, -26임
+        // 순서가 없는 카드일때도 나중에 한번 생각해보기
+        
+        for(let i=0; i<52; i++){
+          imgArr[i].onclick = function () {
+            if(isfirstCard()) {
+              // 첫번쨰 카드의 정보를 담아둬야함
+              // 위치와, 카드정보
+              firstCard위치 = i;
+              firstCard정보 = parseInt(arr[i].split(".")[0].substring(8));
+            }
+
+            clickedCard = imgArr[i]; // 첫번쨰든 두번쨰든 클릭된 돔이미지객체 저장
+
+            if(isback(clickedCard)){ // 당연히 카드 정보를 넘겨줘야 속성을 확인하지
+              showCard(clickedCard, arr[i]); // 뒷면인걸 앞면으로 바꿔주는 애, 보여지게 하려면 얘의 돔위치와, 카드정보를 알아야함
+              
+              // 한장 열려있으면 또 열어서 비교
+              if(isSecondCard()){
+                count = 0;
+                // 두번째 카드의 정보도 저장
+                secondCard위치 = i;
+                secondCard정보 = parseInt(arr[i].split(".")[0].substring(8));
+
+                if(!(firstCard정보 - secondCard정보 === 26 || firstCard정보 - secondCard정보 === -26 )){
+                  
+                  setTimeout(() => {
+                    imgArr[firstCard위치].hided = true;
+                    imgArr[firstCard정보].src = DEFAULT_IMG;
+  
+                    imgArr[secondCard위치].hided = true;
+                    imgArr[secondCard정보].src = DEFAULT_IMG;
+                  }, 500);
+                }
+
+              }
+            
+            }
+  
+          }
+        } //for
+      };// window
+
+      function isSecondCard() {
+        return count == 2;
+      }
+
+      function showCard(clickedCard, arrInfo) {
+        //보여지면 count를 조작해야함
+        count += 1; //1씩 증가
+        clickedCard.hided = false;
+        clickedCard.src = arrInfo;
+
+      }
+      function isback(clickedCard) {
+        return clickedCard.hided;
+      }
+
+      var count = 0; // 이걸 var count; 했더니 안됐음
+      function isfirstCard() {
+        return count === 0;
+      }
+
+      // !! 코드를 3번 다시 짜면서 만났던 오류!!!
+      // 카드가 2장만 눌려야하는데 계속 눌렸음.
+      // count에 문제가 있는걸 인지하고 봤는데
+      // var count;이라고 선언해서 문제가 없을 줄 알았는데
+      // isfirstCard() 메서드에서
+      // return count === 0; 이
+      // count 가 현재 undefined니까 비교가 안됨.
+
+      
+
+		
+
+
+
+    </script>
+  </body>
+</html>

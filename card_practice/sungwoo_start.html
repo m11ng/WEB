@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      body {
+        padding: 100px;
+      }
+      img {
+        width: 100px;
+        margin: auto 7px;
+        margin-bottom: 7px;
+      }
+      img:hover {
+        outline: red;
+        background-color: red;
+        box-shadow: 5px 5px 5px #666;
+      }
+      button {
+        position: relative;
+        margin-right: 10px;
+        width: 100px;
+        height: 30px;
+        left: 5px;
+        bottom: 50px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 1. 레이아웃 짜기 -->
+    <button id="hide">HIDE</button>
+    <!-- REFACTOR 버튼 하나로 합치기 -->
+    <button id="show">SHOW</button>
+    <button id="shuffle">SHUFFLE</button>
+    <!-- 2. 요소에 접근 -->
+    <!-- 3. 이벤트 등록 -->
+    <script>
+      for (let i = 0; i < 52; i++) {
+        if (i % 13 == 0) document.write(`<br >`);
+        document.write(`<img id='${i}' src='/images/52.png'>`);
+      }
+			
+      let count = 0;
+      const arr = [];
+      window.onload = function () {
+        const hideCheckBtn = document.getElementById("hide");
+        const showCheckBtn = document.getElementById("show");
+        const shuffleCheckBtn = document.getElementById("shuffle");
+        const imgArr = document.getElementsByTagName("img");
+        const DEFAULT_IMG = '/images/52.png';
+
+        (function () {
+          for (let i = 0; i < 52; i++) arr.push("/images/" + i + ".png");
+          for (let i = 0; i < imgArr.length; i++) {
+            imgArr[i].hided = true;
+          }
+        })();
+
+        // REFACTOR: foreach 로 바꿔보기
+        // FEAT: 전체 카드 가리기
+        hideCheckBtn.onclick = (e) => {
+          for (let i = 0; i < imgArr.length; i++) {
+            imgArr[i].src = DEFAULT_IMG;
+            is_hide = false;
+          }
+        };
+
+        // FEAT 전체 카드 보여주기
+        showCheckBtn.onclick = () => {
+          for (let i = 0; i < arr.length; i++) {
+            imgArr[i].src = arr[i];
+            is_hide = true;
+          }
+        };
+
+        // FEAT 전체 카드 섞기
+        shuffleCheckBtn.onclick = () => {
+          let num = 0;
+          arr.sort(() => Math.random() - 0.5);
+          //   arr.forEach((e) => (arr[num++].src = e));
+          if (is_hide) arr.forEach((imgName) => (imgArr[num++].src = imgName));
+          else imgArr.forEach((ele) => (imgArr[i].src = DEFAULT_IMG));
+        };
+
+        let is_hide;
+				let chooseFirst;
+			for(let i=0; i<imgArr.length; i++){
+
+				imgArr[i].onclick = () => {
+					const CHECK_SAME_IMG = parseInt(arr[i].split(".")[0].substring(8)); // 두번째카드고유번호저장
+					if(isFirstCard()) {
+						chooseFirst = parseInt(arr[i].split(".")[0].substring(8)); // 첫번쨰카드고유번호저장
+						firstCard위치 = i; // 첫번째카드 위치
+					}
+					clickedCard = imgArr[i]; // 이미지객체 저장
+					// 카드 뒤집기
+					if(isBack(clickedCard)){
+						showCard(clickedCard, arr[i]);
+
+						if(isSecondCard()){
+							count = 0;
+
+							if(!(chooseFirst - CHECK_SAME_IMG === 26 || chooseFirst - CHECK_SAME_IMG === -26 )) {
+
+								setTimeout(() => {
+									
+									imgArr[firstCard위치].hided = true;
+									imgArr[firstCard위치].src = DEFAULT_IMG;
+
+									imgArr[i].hided = true;
+									imgArr[i].src = DEFAULT_IMG;
+								}, 500);
+							}
+							console.dir(chooseFirst);
+								console.dir(CHECK_SAME_IMG);
+						}
+					}
+
+				};
+			}
+			// 고유번호 / 위치 
+
+		};
+		function isSecondCard() {
+			return count === 2
+		}
+
+		function showCard(card, src) {
+			count++;
+			card.hided = false;
+			card.src = src;
+		}
+
+		function isBack(card) {
+			return card.hided;
+		}
+
+		function isFirstCard() {
+			return count === 0;
+		}
+
+    </script>
+  </body>
+</html>
