@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body>
+	<h2>typeof로 타입 확인하기</h2>
+	<p id="demo"></p>
+	<h1 onclick="this.innerHTML='ooops!'">Click on this text!</h1>
+		
+	<script>
+		// let Data = new Data();
+		// document.getElementById("demo").innerHTML = 
+		// typeof "john" + "<br>" + // string
+		// typeof 3.14 + "<br>" + // number
+		// typeof NaN + "<br>" + // number
+		// typeof false + "<br>" +
+		// typeof [1,2,3,4] + "<br>" + // object
+		// typeof {name:'john', age:34} + "<br>" + // object
+		// typeof new Data() + "<br>" +
+		// typeof function() {} + "<br>" +
+		// typeof myCar + "<br>" +
+		// typeof null;
+
+	
+		var num = 123;
+		var num2 = new Number(123);
+		typeof num
+		// console.log(typeof num);
+		
+// -----------------------------------------------------------
+
+		var f = function(a,b) {return a+b;}; // 함수의 선언과 호출
+		console.log(f(3,5));
+
+		function add(a,b){return a+b;};
+		console.log(add(3,5));
+
+		var result = function (a,b){return a+b;};
+		console.log(result(3,5));
+
+		console.log( ((a,b) => (a+b))(3,5) ); //IIEE 선언과 함수의 호출을 하나로 합친거
+
+		// function findMax(a, b) {
+		// 	var i;
+		// 	var max = -Infinity;
+			  
+
+		// 	 for(i=0; i<arguments.length; i++){
+		// 		if(arguments[i] > max){
+		// 			max = arguments[i];
+		// 		}
+		// 		return max;
+		// 	 }
+		// }
+
+		// console.log(findMax(3,5));
+
+		function Person(name, age){
+			this.name = name;
+			this.age = age;
+		}
+
+		var obj = new Person("david", 10);
+		var obj2 = new Person("wendy", 20);
+		obj.getName = function() { return this.name;}
+
+		console.log(obj.getName());
+		
+		for(var prop in obj){
+			console.log(obj[prop]); 
+		}
+
+		var p = new Person("Tom", 33);
+		var p2 = Person("jack", 20); // this = window
+		var p3 = Person("tim", 30);
+		console.log(p);
+		console.log(p3);
+
+		var myobj = {
+				func1 : function() {
+					console.log(this);
+					var func2 = function() {
+						console.log(this);
+						var func3 = function() {
+							console.log(this);
+						}();
+					}();
+				}
+		}
+
+
+		myobj.func1(); 
+
+	
+		
+	</script>
+
+	
+</body>
+</html>
